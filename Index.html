@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Study Hub | BA Resource Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .navbar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary);
+      background-color: #eff6ff;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 4rem 1.5rem 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Quick Filter Tabs */
+    .year-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.4rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    /* Content Layout */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+    }
+
+    .year-section {
+      margin-bottom: 3.5rem;
+    }
+
+    .year-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+
+    .year-header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+
+    .year-header span {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Subject Cards Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .subject-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .subject-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .subject-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: #eff6ff;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .topic-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .topic-list li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.92rem;
+      color: #334155;
+    }
+
+    .topic-list li::before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.5rem;
+      text-align: center;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+    }
+
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="navbar">
+      <a href="#" class="logo">📚 Campus Study Hub</a>
+      <nav class="nav-links">
+        <a href="#fyba">FYBA</a>
+        <a href="#syba">SYBA</a>
+        <a href="#tyba">TYBA</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>All Your BA Resources in One Place</h1>
+    <p>Comprehensive syllabi, key topics, past questions, and notes organized by year.</p>
+    
+    <div class="year-tabs">
+      <button class="tab-btn active" onclick="filterYear('all', this)">All Years</button>
+      <button class="tab-btn" onclick="filterYear('fyba', this)">FYBA</button>
+      <button class="tab-btn" onclick="filterYear('syba', this)">SYBA</button>
+      <button class="tab-btn" onclick="filterYear('tyba', this)">TYBA</button>
+    </div>
+  </section>
+
+  <!-- Main Content Area -->
+  <main class="container">
+
+    <!-- FYBA Section -->
+    <section id="fyba" class="year-section">
+      <div class="year-header">
+        <h2>FYBA</h2>
+        <span>First Year Bachelor of Arts — Foundation Year</span>
+      </div>
+      <div class="card-grid">
+
+        <!-- Subject 1 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Compulsory</span>
+            <h3 class="subject-title">Communication Skills in English</h3>
+            <ul class="topic-list">
+              <li>Reading comprehension and critical analysis</li>
+              <li>Formal correspondence, emails, and reporting</li>
+              <li>Grammar fundamentals, voice, and vocabulary</li>
+              <li>Summarizing, precis writing, and paraphrasing</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 2 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Core / Elective</span>
+            <h3 class="subject-title">Introduction to Political Science</h3>
+            <ul class="topic-list">
+              <li>Concepts: State, Nation, Sovereignty, and Power</li>
+              <li>Forms of Government (Democracy, Authoritarianism)</li>
+              <li>Key Political Ideologies (Liberalism, Socialism, Marxism)</li>
+              <li>Fundamental Rights, Duties, and Citizenship</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 3 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Core / Elective</span>
+            <h3 class="subject-title">Basic Principles of Sociology</h3>
+            <ul class="topic-list">
+              <li>Nature and scope of Sociology as a discipline</li>
+              <li>Social Institutions: Family, Marriage, Kinship, and Religion</li>
+              <li>Social Stratification: Class, Caste, and Social Mobility</li>
+              <li>Culture, Socialization, and Social Control mechanisms</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 4 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Core / Elective</span>
+            <h3 class="subject-title">Microeconomics Fundamentals</h3>
+            <ul class="topic-list">
+              <li>Law of Demand, Supply, and Market Equilibrium</li>
+              <li>Elasticity of Demand (Price, Income, Cross)</li>
+              <li>Consumer Behavior: Utility & Indifference Curve analysis</li>
+              <li>Production Functions and Cost-Revenue Curves</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SYBA Section -->
+    <section id="syba" class="year-section">
+      <div class="year-header">
+        <h2>SYBA</h2>
+        <span>Second Year Bachelor of Arts — Intermediate Core</span>
+      </div>
+      <div class="card-grid">
+
+        <!-- Subject 1 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Macro Track</span>
+            <h3 class="subject-title">Macroeconomics</h3>
+            <ul class="topic-list">
+              <li>National Income Accounting (GDP, GNP, NNP calculations)</li>
+              <li>Classical vs. Keynesian Theory of Employment & Income</li>
+              <li>Inflation, Deflation, and Monetary Policy tools</li>
+              <li>Banking operations, Central Bank functions, and Credit Creation</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 2 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Polity Track</span>
+            <h3 class="subject-title">Indian Constitution & Politics</h3>
+            <ul class="topic-list">
+              <li>Preamble, Constitutional Framework, and Salient Features</li>
+              <li>Structure of Union Executive & Parliament (President, PM, Houses)</li>
+              <li>Judicial Independence and Supreme Court Jurisdictions</li>
+              <li>Federalism: Centre-State Relations and Emergency Provisions</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 3 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Social Track</span>
+            <h3 class="subject-title">Sociology of Indian Society</h3>
+            <ul class="topic-list">
+              <li>Colonial impact on Indian social structure</li>
+              <li>Contemporary agrarian and rural transformations</li>
+              <li>Communalism, regionalism, and secularism debates</li>
+              <li>Gender equality, social movements, and affirmative action</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 4 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Literature Track</span>
+            <h3 class="subject-title">English Literature (Drama & Poetry)</h3>
+            <ul class="topic-list">
+              <li>Elizabethan and Victorian Poetry styles and analysis</li>
+              <li>Elements of Drama: Conflict, Protagonist, Plot Structure</li>
+              <li>Close reading and critical appreciation techniques</li>
+              <li>Literary devices, meter, and figurative language</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TYBA Section -->
+    <section id="tyba" class="year-section">
+      <div class="year-header">
+        <h2>TYBA</h2>
+        <span>Third Year Bachelor of Arts — Specialization & Applied Studies</span>
+      </div>
+      <div class="card-grid">
+
+        <!-- Subject 1 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Methodology</span>
+            <h3 class="subject-title">Social Science Research Methods</h3>
+            <ul class="topic-list">
+              <li>Formulating hypotheses and scientific research design</li>
+              <li>Data collection: Questionnaires, interviews, and sampling methods</li>
+              <li>Quantitative vs. qualitative analysis and ethics in research</li>
+              <li>Report writing, bibliography, and citation formatting (APA/MLA)</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 2 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Advanced Global</span>
+            <h3 class="subject-title">International Relations & Geopolitics</h3>
+            <ul class="topic-list">
+              <li>Realism, Liberalism, and Constructivism in world politics</li>
+              <li>Post-Cold War international order and global conflicts</li>
+              <li>United Nations, WTO, and international treaties</li>
+              <li>India's Foreign Policy and relations with neighboring states</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 3 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Advanced Economics</span>
+            <h3 class="subject-title">Development & Public Economics</h3>
+            <ul class="topic-list">
+              <li>Economic Growth vs. Human Development Index (HDI)</li>
+              <li>Public Revenue, Taxation principles, and GST structure</li>
+              <li>Fiscal deficit, government borrowing, and public debt management</li>
+              <li>Environmental sustainability and inclusive growth models</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+        <!-- Subject 4 -->
+        <div class="subject-card">
+          <div>
+            <span class="subject-badge">Advanced Theory</span>
+            <h3 class="subject-title">Western & Indian Political Thought</h3>
+            <ul class="topic-list">
+              <li>Western thinkers: Plato, Aristotle, Machiavelli, John Locke</li>
+              <li>Indian political ideas: Kautilya’s Arthashastra and Rajdharma</li>
+              <li>Modern thinkers: B.R. Ambedkar (Social Justice) and M.K. Gandhi (Satyagraha)</li>
+              <li>Comparative analysis of sovereignty and statecraft theories</li>
+            </ul>
+          </div>
+          <div class="card-actions">
+            <a href="#" class="btn btn-primary">Study Notes</a>
+            <a href="#" class="btn btn-outline">Syllabus</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Campus Study Hub. Built for college scholars.</p>
+  </footer>
+
+  <!-- Script for Filtering -->
+  <script>
+    function filterYear(year, element) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+
+      const sections = ['fyba', 'syba', 'tyba'];
+      if (year === 'all') {
+        sections.forEach(id => {
+          document.getElementById(id).style.display = 'block';
+        });
+      } else {
+        sections.forEach(id => {
+          document.getElementById(id).style.display = (id === year) ? 'block' : 'none';
+        });
+      }
+    }
+  </script>
+</body>
+</html>
